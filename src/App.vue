@@ -1,28 +1,41 @@
-<template>
-  <div id="app">
-    <img src="./assets/logo.png">
-    <hello></hello>
-  </div>
+<template lang="pug">
+  #app
+    character-list(v-bind:initialCharacters="storageCharacters")
 </template>
 
 <script>
-import Hello from './components/Hello'
+import CharacterList from './components/CharacterList'
+
+if (localStorage.getItem('characterList') === null || typeof localStorage.getItem('characterList') !== 'object') {
+  localStorage.characterList = JSON.stringify([])
+}
 
 export default {
+  data: () => {
+    console.log(localStorage)
+    return {
+      storageCharacters: JSON.parse(localStorage.characterList)
+    }
+  },
   name: 'app',
   components: {
-    Hello
+    'characterList': CharacterList
   }
 }
 </script>
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style lang="stylus">
+*, *::before, *::after
+  box-sizing border-box
+
+body, html
+  margin 0
+  padding 0
+  background-color #111
+  color #fff
+  -webkit-font-smoothing antialiased
+  -moz-osx-font-smoothing grayscale
+
+a
+  color #0af
 </style>
