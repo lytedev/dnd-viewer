@@ -19,7 +19,9 @@
     "pug-loader": "^2.3.0",
     "stylus": "^0.54.5",
     "stylus-loader": "^2.4.0",
-    "vue": "^2.1.0"
+    "vue": "^2.1.0",
+    "vue-router": "^2.1.1",
+    "vuex": "^2.0.0"
   },
   "devDependencies": {
     "autoprefixer": "^6.4.0",

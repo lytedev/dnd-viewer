@@ -83,6 +83,9 @@ module.exports = {
   eslint: {
     formatter: require('eslint-friendly-formatter')
   },
+  stylus: {
+    import: [path.resolve(projectRoot, 'src/styles/variables.styl')]
+  },
   vue: {
     loaders: utils.cssLoaders({ sourceMap: useCssSourceMap }),
     postcss: [
