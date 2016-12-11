@@ -2,30 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Vuex from 'vuex'
 
-import App from './App'
-import MainMenu from './components/MainMenu.vue'
-import CharacterList from './components/CharacterList.vue'
-
-const routes = [
-  {
-    path: '/',
-    component: App,
-    children: [
-      {
-        path: '/',
-        component: MainMenu
-      },
-      {
-        path: 'classes',
-        component: MainMenu
-      },
-      {
-        path: 'characters',
-        component: CharacterList
-      }
-    ]
-  }
-]
+import routes from './routes'
 
 const router = new VueRouter({
   // TODO: mode: 'history',
