@@ -1,51 +1,65 @@
 <template lang="pug">
-ul.character-list
-  li()
-    button(v-on:click="$router.push('/')") Back
-    button(v-on:click="addCharacter") Add Character
-    button(v-on:click="saveCharacters") Save All
-  li.character(v-for="character in characters")
-    button(v-on:click="removeCharacter(character)") Remove
-    |  {{ character.name }}
+#character-list
+  top-menu
+    btn(@click="addCharacter") Add Character
+    btn(@click="toggleArchived") {{ showArchived ? 'Hide Archived Characters' : 'Show Archived Characters' }}
+  .character-grid
+    character-card(v-for="character in activeCharacters" v-bind:character="character")
 </template>
 
 <script>
+import Button from './Button'
+import TopMenu from './TopMenu'
+import CharacterCard from './CharacterCard'
 import Character from '../character'
 
 export default {
-  name: 'character-list',
+  components: {
+    Btn: Button,
+    TopMenu: TopMenu,
+    CharacterCard: CharacterCard
+  },
   computed: {
     characters() {
-      return this.$store.state.characterList
+      return this.showArchived ? this.$store.state.characterList : this.$store.getters.activeCharacters
     }
   },
   data: function() {
     return {
+      preRemove: -1,
+      showArchived: false,
       characters: this.initialCharacters
     }
   },
   methods: {
-    removeCharacter(character) {
-      let id = this.characters.indexOf(character)
-      this.characters.splice(id, 1)
+    toggleArchived() {
+      this.showArchived = !this.showArchived
     },
     addCharacter(newCharacter) {
       if (!(newCharacter instanceof Character)) {
         newCharacter = new Character()
       }
-      this.characters.push(newCharacter)
+      this.$store.commit('addCharacter', newCharacter)
+      this.$store.commit('save')
     },
     saveCharacters() {
-      this.$store.commit('store')
+      this.$store.commit('save')
     }
   }
 }
 </script>
 
 <style lang="stylus">
-.character-list
-  margin 0
-  padding 0
-  color inherit
-  list-style none
+#character-list
+  display flex
+  width 100%
+  flex-direction column
+  flex-grow 1
+
+  .character-grid
+    display flex
+    justify-content center
+    flex-wrap wrap
+    margin 0.5rem
+
 </style>
